@@ -7,7 +7,7 @@ import useStyles from './NavbarStyle';
 
 const Navbar = ({ totalItems }) => {
     const classes = useStyles();
-
+    
     return (
         <>
             <AppBar position="fixed" className={classes.appBar} color="inherit">
