@@ -3,7 +3,7 @@ import React from 'react';
 
 import useStyles from './CardItemStyles';
 
-const CardItem = ({ item }) => {
+const CardItem = ({ item, onRemoveFromCart, onUpdateCartQty }) => {
     const classes = useStyles();
     return (
         <Card>
@@ -14,11 +14,11 @@ const CardItem = ({ item }) => {
             </CardContent>
             <CardActions className={classes.CardActions} >
                 <div className={classes.buttons}>
-                    <Button type="button" size="small">-</Button>
+                    <Button type="button" size="small" onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}>-</Button>
                     <Typography>{ item.quantity }</Typography>
-                    <Button type="button" size="small">+</Button>
+                    <Button type="button" size="small" onClick={() => onUpdateCartQty(item.id, item.quantity + 1)}>+</Button>
                 </div>
-                <Button variant="contained" type="button" color="secondary"> Remove </Button>
+                <Button variant="contained" type="button" color="secondary" onClick={() => onRemoveFromCart(item.id)}> Remove </Button>
             </CardActions>
         </Card>
     );
