@@ -5,7 +5,7 @@ import { Button, Divider, Typography } from '@material-ui/core';
 
 import Review from './Review';
 
-const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout, nextStep }) => {
+const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout, nextStep, timeout }) => {
 
     const stripePromise = loadStripe('pk_test_51IU4jHFrtRkHAiU3CRWmskXjMZ68bsAl141UQKNR6RjyFUsL9cdRod6SOlPMNQ2FyKeqI6bZoSZ9hK4esxcI9WCO00mFPnyLy7');
 
@@ -16,7 +16,7 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
 
         const cardElement = elements.getElement(CardElement);
 
-        const { error, paymentMethod } = await stripe.createPaymentMethod({ type: 'card', card: CardElement });
+        const { error, paymentMethod } = await stripe.createPaymentMethod({ type: 'card', card: cardElement });
 
         if (error) {
             console.log(error);
@@ -45,9 +45,11 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
                 }
             }
             onCaptureCheckout(checkoutToken.id, orderData);
+            timeout();
             nextStep();
         }
-    }
+    };
+    
     return (
         <>
             <Review checkoutToken={checkoutToken} />
